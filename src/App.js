@@ -1,90 +1,84 @@
+import axios from "axios";
+import { Route, Routes } from "react-router-dom";
+import Home from "./components/pages/Home";
+import Header from "./components/Header";
+import Overlay from "./components/Overlay";
+import React, { useState, useEffect } from "react";
+import Favorites from "./components/pages/Favorites";
 
 function App() {
+  const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [searchValue, setSearchValue] = useState([]);
+  const [favorite, setFavorite] = useState([]);
+  const [cartOpened, setCartOpened] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/items")
+      .then((res) => {
+        setItems(res.data);
+      });
+    axios
+      .get("http://localhost:3000/cart")
+      .then((res) => {
+        setCartItems(res.data);
+      });
+      axios
+      .get("http://localhost:3000/favorites")
+      .then((res) => {
+        setFavorite(res.data);
+      });
+  }, []);
+
+  const onAddToCart = (object) => {
+    axios.post("http://localhost:3000/cart", object);
+    setCartItems((prev) => [...prev, object]);
+  };
+  const onAddToFavorite = (object) => {
+    axios.post("http://localhost:3000/favorites", object);
+    setFavorite((prev) => [...prev, object]);
+  };
+  const onChangeInput = (event) => {
+    setSearchValue(event.target.value);
+  };
+  const onRemoveItem = (id) => {
+    axios.delete(`http://localhost:3000/cart/${id}`);
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <div className="wrapper">
-      <header>
-        <div className="headerLeft">
-          <img width = {40} height = {40} src="/img/logo.png" ></img>
-          <div>
-            <h3>REACT SNEAKERS</h3>
-            <p>Магазин лучших кроссовок</p>
-          </div>
-        </div>
-        <ul className="headerRight">
-          <li>
-            <img width={18} height={18} src="/img/Cart.svg"></img>
-            <span>1205 руб.</span>
-          </li>
-          <li>
-            <img width={18} height={18} src="/img/heart.svg"></img>
-            <span>Закладки</span>
-          </li>
-          <li>
-            <img width={18} height={18} src="/img/profile.svg"></img>
-            <span>Профиль</span>
-          </li>
-        </ul>
-      </header>
-      <div className="content">
-        <h1>Все кроссовки</h1>
-      </div>
-      <div className="cards">
-        <div className="card">
-          <img width={133} height={112} src="/img/sneaker1.png"></img>
-          <p>Мужские Кроссовки <br></br> Nike Blazer Mid Suede</p>
-          <div className="cardBottom">
-            <div className="price">
-              <span>Цена:</span>
-              <b>12 999 руб.</b>
-            </div>
-            <button className="button">
-              <img width={11} height={11} src="/img/plus.svg"></img>
-            </button>
-          </div>
-        </div>
-        <div className="card">
-          <img width={133} height={112} src="/img/sneaker2.png"></img>
-          <p>Мужские Кроссовки Nike Air Max 270</p>
-          <div className="cardBottom">
-            <div className="price">
-              <span>Цена:</span>
-              <b>12 999 руб.</b>
-            </div>
-            <button className="button">
-              <img width={11} height={11} src="/img/plus.svg"></img>
-            </button>
-          </div>
-        </div>
-        <div className="card">
-          <img width={133} height={112} src="/img/sneaker3.png"></img>
-          <p>Мужские Кроссовки Nike Blazer Mid Suede</p>
-          <div className="cardBottom">
-            <div className="price">
-              <span>Цена:</span>
-              <b>8 499 руб.</b>
-            </div>
-            <button className="button">
-              <img width={11} height={11} src="/img/plus.svg"></img>
-            </button>
-          </div>
-        </div>
-        <div className="card">
-          <img width={133} height={112} src="/img/sneaker4.png"></img>
-          <p>Кроссовки Puma X Aka Boku Future Rider</p>
-          <div className="cardBottom">
-            <div className="price">
-              <span>Цена:</span>
-              <b>8 999 руб.</b>
-            </div>
-            <button className="button">
-              <img width={11} height={11} src="/img/plus.svg"></img>
-            </button>
-          </div>
-        </div>
-      </div>  
-      
+      {cartOpened ? (
+        <Overlay
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+        />
+      ) : null}
+      <Header onClickCart={() => setCartOpened(true)} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              onChangeInput={onChangeInput}
+              onAddToCart={onAddToCart}
+              onAddToFavorite={onAddToFavorite}
+            />
+          }
+          exact
+        />
+        <Route
+          path="/favorites"
+          element={<Favorites items={favorite} onAddToFavorite={onAddToFavorite} />}
+          exact
+        />
+      </Routes>
     </div>
-  )
+  );
 }
 
 export default App;
