@@ -1,27 +1,29 @@
+import React from "react";
 import Card from "../Card";
-export default function Favorites({items, onAddToFavorite}) {
+import AppContext from "../../context";
+export default function Favorites({ onAddToFavorite, onPlus }) {
+  const { favorite } = React.useContext(AppContext);
+
   return (
     <div className="home">
       <div className="content">
-        <h1>
-          Мои закладки
-        </h1>
-        
+        <h1>Мои закладки</h1>
       </div>
-
-      <div className="cards">
-        {items
-          .map((obj, index) => (
+      {favorite.length == 0 ? (
+        <h1 className="sidePage">Вы пока не выбрали избранное</h1>
+      ) : (
+        <div className="cards">
+          {favorite.map((obj, index) => (
             <Card
               key={index}
-              title={obj.title}
-              price={obj.price}
-              imageUrl={obj.imageUrl}
+              {...obj}
               favorited={true}
-              
+              onFavorite={onAddToFavorite}
+              onPlus={onPlus}
             />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

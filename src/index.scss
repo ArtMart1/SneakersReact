@@ -271,3 +271,20 @@ header {
   cursor: pointer;
   
 }
+.search{
+  input{
+    width: 180px;
+  }
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+.sidePage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  font-size: 36px;
+}

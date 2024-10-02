@@ -76,28 +76,42 @@
   "cart": [],
   "favorites": [
     {
-      "id": "9070",
+      "id": "2",
       "title": "Мужские Кроссовки Nike Air Max 270",
       "price": 13999,
       "imageUrl": "/img/sneaker2.png"
+    }
+  ],
+  "orders": [
+    {
+      "0": {
+        "id": "2",
+        "title": "Мужские Кроссовки Nike Air Max 270",
+        "price": 13999,
+        "imageUrl": "/img/sneaker2.png"
+      },
+      "1": {
+        "id": "6",
+        "title": "Мужские Кроссовки Nike Kyrie 7",
+        "price": 14399,
+        "imageUrl": "/img/sneaker6.png"
+      },
+      "id": "e967"
     },
     {
-      "id": "42e7",
-      "title": "Мужские Кроссовки Nike Blazer Mid Suede",
-      "price": 8499,
-      "imageUrl": "/img/sneaker3.png"
-    },
-    {
-      "id": "dc64",
-      "title": "Мужские Кроссовки Nike Air Max 270",
-      "price": 13999,
-      "imageUrl": "/img/sneaker2.png"
-    },
-    {
-      "id": "0952",
-      "title": "Мужские Кроссовки Nike Blazer Mid Suede",
-      "price": 8499,
-      "imageUrl": "/img/sneaker3.png"
+      "0": {
+        "id": "2",
+        "title": "Мужские Кроссовки Nike Air Max 270",
+        "price": 13999,
+        "imageUrl": "/img/sneaker2.png"
+      },
+      "1": {
+        "id": "3",
+        "title": "Мужские Кроссовки Nike Blazer Mid Suede",
+        "price": 8499,
+        "imageUrl": "/img/sneaker3.png"
+      },
+      "id": "f972"
     }
   ]
 }

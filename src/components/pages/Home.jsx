@@ -4,7 +4,8 @@ export default function Home({
   onChangeInput,
   searchValue,
   onAddToCart,
-  onAddToFavorite
+  onAddToFavorite,
+  cartItems
 }) {
   return (
     <div className="home">
@@ -28,9 +29,8 @@ export default function Home({
           .map((obj, index) => (
             <Card
               key={index}
-              title={obj.title}s
-              price={obj.price}
-              imageUrl={obj.imageUrl}
+              
+              {...obj}
               onPlus={(object) => {
                 onAddToCart(object);
               }}
@@ -38,6 +38,7 @@ export default function Home({
                 onAddToFavorite(object);
               }}
               favorited = {false}
+              added={cartItems.some(item => item.id === obj.id)}              
             />
           ))}
       </div>
